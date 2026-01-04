@@ -1,0 +1,116 @@
+[
+    {
+        "skills": [
+            {
+                "name": "read",
+                "value": 55
+            },
+            {
+                "name": "write",
+                "value": 95
+            }
+        ],
+        "occupation": "student",
+        "gender": "male",
+        "name": "Owen",
+        "attributes": {
+            "STR": 43,
+            "APP": 64,
+            "SAN": 99,
+            "CON": 45,
+            "MP": 7,
+            "SIZ": 55,
+            "DEX": 65,
+            "EDU": 26,
+            "HP": 10,
+            "POW": 37,
+            "LUC": 88,
+            "INT": 59
+        },
+        "age": 21
+    },
+    {
+        "skills": [
+            {
+                "name": "Sing",
+                "value": 55
+            },
+            {
+                "name": "Dance",
+                "value": 48
+            }
+        ],
+        "occupation": "student",
+        "gender": "female",
+        "name": "Lily",
+        "attributes": {
+            "STR": 45,
+            "APP": 66,
+            "SAN": 99,
+            "CON": 40,
+            "MP": 15,
+            "SIZ": 42,
+            "DEX": 66,
+            "EDU": 50,
+            "HP": 8,
+            "POW": 78,
+            "LUC": 75,
+            "INT": 54
+        },
+        "age": 21
+    },
+    {
+        "skills": [
+            {
+                "name": "Write",
+                "value": 68
+            },
+            {
+                "name": "Library Use",
+                "value": 63
+            }
+        ],
+        "occupation": "officer",
+        "gender": "other",
+        "name": "Alex",
+        "attributes": {
+            "STR": 38,
+            "APP": 45,
+            "SAN": 99,
+            "CON": 35,
+            "MP": 13,
+            "SIZ": 55,
+            "DEX": 40,
+            "EDU": 58,
+            "HP": 9,
+            "POW": 68,
+            "LUC": 66,
+            "INT": 44
+        },
+        "age": 28
+    },
+    {
+        "skills": [{
+            "name": "eat",
+            "value": 54
+        }],
+        "occupation": "aaaa",
+        "gender": "male",
+        "name": "Kevin",
+        "attributes": {
+            "STR": 56,
+            "APP": 56,
+            "SAN": 99,
+            "CON": 64,
+            "MP": 11,
+            "SIZ": 42,
+            "DEX": 45,
+            "EDU": 76,
+            "HP": 10,
+            "POW": 57,
+            "LUC": 83,
+            "INT": 64
+        },
+        "age": 20
+    }
+]

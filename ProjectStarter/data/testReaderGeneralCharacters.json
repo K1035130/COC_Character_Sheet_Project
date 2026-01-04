@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Man",
+    "occupation": "student",
+    "gender": "male",
+    "age": 34,
+    "attributes": {
+      "STR": 45,
+      "DEX": 60,
+      "INT": 80,
+      "POW": 55
+    },
+    "skills": [
+      {"name": "Library", "value": 75},
+      {"name": "Hidden", "value": 50}
+    ]
+  },
+  {
+    "name": "Henry",
+    "occupation": "Professor",
+    "gender": "male",
+    "age": 52,
+    "attributes": {
+      "STR": 40,
+      "EDU": 90,
+      "INT": 85
+    },
+    "skills": [
+      {"name": "Occult", "value": 60}
+    ]
+  }
+]
