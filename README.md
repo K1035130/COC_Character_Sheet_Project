@@ -1,97 +1,115 @@
-# My Personal Project
+# COC Character Sheet Project
 
-## Proposal
-- This project is a local tool for managing COC (Call of Cthulhu) character sheets. 
+A tool for managing Call of Cthulhu (COC) tabletop RPG character sheets — create, view, edit, and delete characters, with derived stats (HP/MP/SAN) calculated automatically from core attributes.
 
-- The application will allows users to **creat, viewing, edit, delete** their character sheets. And auto-calculate derived data *(HP, MP, SAN )*.
+This repository contains **two independent apps**:
 
--  The main users of this application should be players of the COC (Call of Cthulhu) game. 
+| App | Location | Description |
+|---|---|---|
+| Web app (new) | [`backend/`](backend), [`frontend/`](frontend) | Multi-user, browser-based, deployable to Render |
+| Desktop app (legacy) | [`ProjectStarter/`](ProjectStarter) | Original single-user Java Swing app, runs locally only |
 
-- Managing character sheets after a player has participated in multiple games can be quite difficult. This application should help them manage their character sheets.
+The two apps do not share code or data. Pick whichever fits what you need — the web app for a hosted, multi-user setup, or the desktop app for a completely offline single-user tool.
 
-## User stories
-- As a user, I want to add/delete a character to my library by name, occupation, age, attributes (include 9 types data), skills.
+---
 
-- As a user, I want to view a list of all characters with key info.
+## Web app
 
-- As a user, I want to edit a character’s attributes and have derived stats auto-recalculated.
+### Features
 
-- As a user, I want to add/edit/delete skills for one character.
+- Account registration/login (JWT-based, per-user data isolation).
+- Create/view/edit/delete characters: name, occupation, age, gender.
+- 9 core attributes (STR/DEX/CON/APP/POW/SIZ/INT/EDU/LUC), editable individually.
+- Derived stats (HP/MP/SAN) recalculated automatically whenever CON/SIZ/POW change; cannot be set directly.
+- **Random attribute allocation** — enter a total point budget (270–900) and randomly distribute it across the 9 core attributes, with each attribute constrained to 30–130.
+- Skills: add/update/remove, with a live count of skills and total points spent.
+- A radar chart visualizing the 9 core attributes.
+- A **backstory** field for freeform character history, with a live character counter.
+- Drag-and-drop (or click-to-browse) **avatar upload**, auto-resized/compressed client-side before saving.
+- Per-character audit log of every change (attribute edits, skill changes, profile updates).
 
-- As a user, I want to be able to save my current character List to file (if I so choose)
+### Tech stack
 
-- As a user, I want to be able to be able to load my previous character List from file (if I so choose)
+- **Backend**: Spring Boot 3 (Java 21), MongoDB (Atlas free tier), Spring Security + JWT (stateless, BCrypt password hashing), Maven.
+- **Frontend**: React + TypeScript (Vite), `react-router-dom`, `recharts`, plain CSS (no UI framework).
 
-## Instructions for End User
+### Repo layout
 
-- You can view the panel that displays the Characters that have already been added to the Library by choose it in the main tble and click the view button.
+```
+backend/     Spring Boot REST API (Maven project, includes mvnw/mvnw.cmd)
+frontend/    React + Vite single-page app
+render.yaml  Render Blueprint (both services)
+```
 
-- You can generate the first required action related to the user story "adding multiple Characters to a Library" by click the add button.
+### Running locally
 
-- You can generate the second required action related to the user story "adding multiple Skills to a Character" by click the edit button.
+You'll need a MongoDB connection string — a free [MongoDB Atlas](https://www.mongodb.com/cloud/atlas/register) M0 cluster works well. Use a distinct database name for local dev (e.g. `coc_sheets_dev`) versus production (e.g. `coc_sheets_prod`) within the same cluster.
 
-- You can locate my visual component by click the view button.
+**Backend:**
 
-- You can save the state of my application by click the save button. 
+```powershell
+cd backend
+copy .env.example .env   # fill in MONGODB_URI and a JWT_SECRET (32+ random bytes)
+```
 
-- You can reload the state of my application by click the load button on the beginning of program.
+Set the environment variables and start the server (PowerShell):
 
-## Phase 4: Task 2
-- Add EventLog, example: 
+```powershell
+Get-Content .env | ForEach-Object { if ($_ -match '^([^=]+)=(.*)$') { Set-Item "env:$($matches[1])" $matches[2] } }
+$env:SPRING_PROFILES_ACTIVE = "local"
+.\mvnw.cmd spring-boot:run
+```
 
-    Sun Nov 23 15:07:30 PST 2025
-    Change character name: Alex->Alex
+The backend starts on `http://localhost:8080`.
 
-    Sun Nov 23 15:07:30 PST 2025
-    Change character Alex occupation: officer->officer
+**Frontend** (separate terminal):
 
-    Sun Nov 23 15:07:30 PST 2025
-    Change character Alex gender: other->other
+```powershell
+cd frontend
+npm install
+npm run dev
+```
 
-    Sun Nov 23 15:07:30 PST 2025
-    Change character Alex gender: other->other
+The frontend starts on `http://localhost:5173` and calls `http://localhost:8080/api` (see `.env.development`). Open it in a browser and register an account to get started.
 
-    Sun Nov 23 15:07:30 PST 2025
-    Change character Alex age: 28->28
+### Running the backend tests
 
-    Sun Nov 23 15:07:30 PST 2025
-    Change character Alex Attribute STR: 38->38
+```powershell
+cd backend
+.\mvnw.cmd test
+```
 
-    Sun Nov 23 15:07:30 PST 2025
-    Change character Alex Attribute DEX: 40->40
+### Deploying to Render
 
-    Sun Nov 23 15:07:30 PST 2025
-    Change character Alex Attribute CON: 35->35
+The root `render.yaml` defines both services as a Render Blueprint:
 
-    Sun Nov 23 15:07:30 PST 2025
-    Change character Alex Attribute APP: 45->45
+1. `coc-sheet-backend` — a Docker-based Web Service built from `backend/Dockerfile`.
+2. `coc-sheet-frontend` — a Static Site built from `frontend/` (`npm ci && npm run build`, publishing `dist/`).
 
-    Sun Nov 23 15:07:30 PST 2025
-    Change character Alex Attribute POW: 68->68
+To deploy:
 
-    Sun Nov 23 15:07:30 PST 2025
-    Change character Alex Attribute SIZ: 55->55
+1. Push this repo to GitHub.
+2. In the Render dashboard, create a new Blueprint from the repo (Render reads `render.yaml` automatically).
+3. On the `coc-sheet-backend` service, set the `MONGODB_URI` and `JWT_SECRET` secrets manually in the dashboard (they're marked `sync: false` in `render.yaml`, so nothing sensitive is committed to git). Point `MONGODB_URI` at a separate production database in the same Atlas cluster.
+4. Deploy. The frontend's `VITE_API_BASE_URL` and the backend's `CORS_ALLOWED_ORIGIN` in `render.yaml` assume the default service names (`coc-sheet-backend`, `coc-sheet-frontend`) — update both if you rename the services.
 
-    Sun Nov 23 15:07:30 PST 2025
-    Change character Alex Attribute INT: 44->44
+**Free-tier note**: the backend web service spins down after ~15 minutes of inactivity, so the first request after idling has a cold-start delay (usually under a minute). The static frontend has no such delay.
 
-    Sun Nov 23 15:07:30 PST 2025
-    Change character Alex Attribute EDU: 58->58
+---
 
-    Sun Nov 23 15:07:30 PST 2025
-    Change character Alex Attribute LUC: 66->66
+## Desktop app (`ProjectStarter/`)
 
-    Sun Nov 23 15:07:30 PST 2025
-    Change character Alex Attribute HP: 9->9
+The original single-user Java Swing application. Character data is stored in a local JSON file (`ProjectStarter/data/characterRecord.json`) — no network, no account, no database.
 
-    Sun Nov 23 15:07:30 PST 2025
-    Change character Alex Attribute MP: 13->13
+### Features
 
-    Sun Nov 23 15:07:30 PST 2025
-    Change character Alex Attribute SAN: 99->99
+- Add/view/edit/delete characters: name, occupation, age, gender, attributes, skills.
+- Derived stats (HP/MP/SAN) recalculated automatically from core attributes.
+- Save/load the character list to/from a JSON file.
+- An in-memory event log recording every change made during a session.
 
-## Phase 4: Task 3
+### Running it
 
-- I think my UI is overly cluttered; given more time, I would separate the GUI and console UI in different foldor. Furthermore, my UI components frequently call object within the model. I might establish an intermediary class to reduce cohesion throughout the project.
+This project has no build tool (no Maven/Gradle) — it's compiled and run directly from source, which is how it originally shipped. `ProjectStarter/.project` and `ProjectStarter/.classpath` are included so VS Code's Java extension picks up the source folders and the jars in `ProjectStarter/lib/` automatically; open the `ProjectStarter/` folder in VS Code and run `src/main/ui/Main.java`.
 
-
+Tests (JUnit 5) live under `ProjectStarter/src/test/` and can be run from VS Code's test explorer, or via the bundled `ProjectStarter/lib/junit-platform-console-standalone-1.10.2.jar`.

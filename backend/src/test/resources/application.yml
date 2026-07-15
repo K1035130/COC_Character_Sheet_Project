@@ -1,0 +1,11 @@
+app:
+  jwt:
+    secret: test-secret-key-for-unit-tests-only-not-for-production-use
+    expiration-minutes: 60
+  cors:
+    allowed-origin: http://localhost:5173
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/coc_sheets_test

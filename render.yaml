@@ -1,0 +1,30 @@
+services:
+  - type: web
+    name: coc-sheet-backend
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    plan: free
+    envVars:
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: CORS_ALLOWED_ORIGIN
+        value: https://coc-sheet-frontend.onrender.com
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+
+  - type: web
+    name: coc-sheet-frontend
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm ci && npm run build
+    staticPublishPath: ./dist
+    envVars:
+      - key: VITE_API_BASE_URL
+        value: https://coc-sheet-backend.onrender.com/api
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
