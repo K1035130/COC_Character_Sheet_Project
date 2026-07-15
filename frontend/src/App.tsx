@@ -4,7 +4,7 @@ import { AuthProvider } from './auth/AuthContext';
 import { ProtectedRoute } from './auth/ProtectedRoute';
 import { NavBar } from './components/layout/NavBar';
 import { ToastProvider } from './components/Toast';
-import { GothicRails } from './components/GothicVine';
+import { GothicRails } from './components/GothicParticles';
 import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
 import { CharacterListPage } from './pages/CharacterListPage';

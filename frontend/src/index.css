@@ -16,8 +16,8 @@
   --accent-bg: rgba(201, 167, 255, 0.16);
   --accent-border: rgba(201, 167, 255, 0.55);
   --shadow: rgba(10, 4, 25, 0.35) 0 10px 30px -6px, rgba(10, 4, 25, 0.25) 0 4px 12px -4px;
-  --glass-bg: rgba(255, 255, 255, 0.08);
-  --glass-bg-strong: rgba(255, 255, 255, 0.14);
+  --glass-bg: rgba(8, 4, 22, 0.52);
+  --glass-bg-strong: rgba(8, 4, 22, 0.66);
   --glass-blur: blur(18px) saturate(160%);
   --danger: #ff8a80;
   --danger-bg: rgba(255, 138, 128, 0.16);

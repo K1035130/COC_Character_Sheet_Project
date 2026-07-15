@@ -49,11 +49,12 @@
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
-  color: var(--accent);
+  color: var(--text-h);
   text-decoration: none;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 0.9rem;
   margin-bottom: 1rem;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.45);
 }
 
 .back-link:hover {
@@ -179,7 +180,7 @@ input,
 textarea {
   font: inherit;
   color: var(--text-h);
-  background: rgba(255, 255, 255, 0.07);
+  background: rgba(0, 0, 0, 0.28);
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 0.5rem 0.6rem;
@@ -619,19 +620,17 @@ textarea:focus {
   }
 }
 
-/* Gothic ornament rails */
+/* Gothic ornament rails: snowflakes/clovers drifting up like bubbles */
 
 .gothic-rail {
   position: fixed;
   top: 0;
   bottom: 0;
-  width: 80px;
+  width: 130px;
   overflow: hidden;
   pointer-events: none;
   z-index: 0;
-  color: rgba(255, 255, 255, 0.4);
-  mask-image: linear-gradient(to bottom, transparent, black 8%, black 92%, transparent);
-  -webkit-mask-image: linear-gradient(to bottom, transparent, black 8%, black 92%, transparent);
+  color: rgba(255, 255, 255, 0.55);
 }
 
 .gothic-rail-left {
@@ -640,28 +639,42 @@ textarea:focus {
 
 .gothic-rail-right {
   right: 0;
-  transform: scaleX(-1);
 }
 
-.gothic-rail-track {
-  display: flex;
-  flex-direction: column;
-  width: fit-content;
-  animation: gothic-drift 50s linear infinite;
+.gothic-particle {
+  position: absolute;
+  bottom: -15%;
+  animation-name: particle-float;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
 }
 
-@keyframes gothic-drift {
-  from {
-    transform: translateY(0);
+/*
+ * Opacity is pinned at 0 for the first/last 10% of the cycle, on both sides
+ * of the transform change. Since `animation-iteration-count: infinite` jumps
+ * straight from 100% back to 0%, keeping both endpoints invisible means the
+ * position reset happens off-screen/invisible - no visible pop/seam.
+ */
+@keyframes particle-float {
+  0% {
+    transform: translateY(0) rotate(var(--rot));
+    opacity: 0;
   }
-  to {
-    transform: translateY(-50%);
+  10% {
+    opacity: var(--peak-opacity);
+  }
+  80% {
+    opacity: var(--peak-opacity);
+  }
+  100% {
+    transform: translateY(-130vh) rotate(calc(var(--rot) + 360deg));
+    opacity: 0;
   }
 }
 
 @media (max-width: 900px) {
   .gothic-rail {
-    width: 36px;
+    width: 70px;
   }
 }
 
