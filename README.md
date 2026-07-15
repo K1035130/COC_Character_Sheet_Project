@@ -2,6 +2,8 @@
 
 A tool for managing Call of Cthulhu (COC) tabletop RPG character sheets — create, view, edit, and delete characters, with derived stats (HP/MP/SAN) calculated automatically from core attributes.
 
+**Live demo (web app)**: https://coc-sheet-frontend.onrender.com/ — register an account to try it. The backend is on Render's free tier, so the first request after ~15 minutes of inactivity may take a bit to wake up.
+
 This repository contains **two independent apps**:
 
 | App | Location | Description |
@@ -94,6 +96,8 @@ To deploy:
 4. Deploy. The frontend's `VITE_API_BASE_URL` and the backend's `CORS_ALLOWED_ORIGIN` in `render.yaml` assume the default service names (`coc-sheet-backend`, `coc-sheet-frontend`) — update both if you rename the services.
 
 **Free-tier note**: the backend web service spins down after ~15 minutes of inactivity, so the first request after idling has a cold-start delay (usually under a minute). The static frontend has no such delay.
+
+This app is currently deployed at https://coc-sheet-frontend.onrender.com/.
 
 ---
 
