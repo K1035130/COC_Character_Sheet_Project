@@ -6,6 +6,12 @@
   justify-content: space-between;
   padding: 1rem 1.5rem;
   border-bottom: 1px solid var(--border);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .navbar .brand {
@@ -57,9 +63,11 @@
 /* Cards */
 
 .card {
-  background: var(--card-bg);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: 16px;
   padding: 1.25rem 1.5rem;
   margin-bottom: 1.25rem;
   box-shadow: var(--shadow);
@@ -171,10 +179,15 @@ input,
 textarea {
   font: inherit;
   color: var(--text-h);
-  background: var(--bg);
+  background: rgba(255, 255, 255, 0.07);
   border: 1px solid var(--border);
-  border-radius: 6px;
+  border-radius: 8px;
   padding: 0.5rem 0.6rem;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: rgba(235, 230, 250, 0.4);
 }
 
 textarea {
@@ -262,14 +275,17 @@ textarea:focus {
   gap: 0.9rem;
   padding: 0.9rem 1rem;
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: 12px;
   text-decoration: none;
   color: inherit;
-  background: var(--card-bg);
-  transition: border-color 0.15s ease, transform 0.05s ease;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  transition: border-color 0.15s ease, transform 0.05s ease, background 0.15s ease;
 }
 
 .character-card:hover {
+  background: var(--glass-bg-strong);
   border-color: var(--accent-border);
 }
 
@@ -600,5 +616,57 @@ textarea:focus {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* Gothic ornament rails */
+
+.gothic-rail {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 80px;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+  color: rgba(255, 255, 255, 0.4);
+  mask-image: linear-gradient(to bottom, transparent, black 8%, black 92%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 8%, black 92%, transparent);
+}
+
+.gothic-rail-left {
+  left: 0;
+}
+
+.gothic-rail-right {
+  right: 0;
+  transform: scaleX(-1);
+}
+
+.gothic-rail-track {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  animation: gothic-drift 50s linear infinite;
+}
+
+@keyframes gothic-drift {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-50%);
+  }
+}
+
+@media (max-width: 900px) {
+  .gothic-rail {
+    width: 36px;
+  }
+}
+
+@media (max-width: 640px) {
+  .gothic-rail {
+    display: none;
   }
 }
