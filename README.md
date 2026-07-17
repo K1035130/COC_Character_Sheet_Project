@@ -1,8 +1,8 @@
 # COC Character Sheet Project
 
-A tool for managing Call of Cthulhu (COC) tabletop RPG character sheets — create, view, edit, and delete characters, with derived stats (HP/MP/SAN) calculated automatically from core attributes.
+A tool for managing Call of Cthulhu (COC) tabletop RPG character sheets : create, view, edit, and delete characters, with derived stats (HP/MP/SAN) calculated automatically from core attributes.
 
-**Live demo (web app)**: https://coc-sheet-frontend.onrender.com/ — register an account to try it. The backend is on Render's free tier, so the first request after ~15 minutes of inactivity may take a bit to wake up.
+**Live demo (web app)**: https://coc-sheet-frontend.onrender.com/ : register an account to try it. The backend is on Render's free tier, so the first request after ~15 minutes of inactivity may take a bit to wake up.
 
 This repository contains **two independent apps**:
 
@@ -11,7 +11,7 @@ This repository contains **two independent apps**:
 | Web app (new) | [`backend/`](backend), [`frontend/`](frontend) | Multi-user, browser-based, deployable to Render |
 | Desktop app (legacy) | [`ProjectStarter/`](ProjectStarter) | Original single-user Java Swing app, runs locally only |
 
-The two apps do not share code or data. Pick whichever fits what you need — the web app for a hosted, multi-user setup, or the desktop app for a completely offline single-user tool.
+The two apps do not share code or data. Pick whichever fits what you need : the web app for a hosted, multi-user setup, or the desktop app for a completely offline single-user tool.
 
 ---
 
@@ -23,7 +23,7 @@ The two apps do not share code or data. Pick whichever fits what you need — th
 - Create/view/edit/delete characters: name, occupation, age, gender.
 - 9 core attributes (STR/DEX/CON/APP/POW/SIZ/INT/EDU/LUC), editable individually.
 - Derived stats (HP/MP/SAN) recalculated automatically whenever CON/SIZ/POW change; cannot be set directly.
-- **Random attribute allocation** — enter a total point budget (270–900) and randomly distribute it across the 9 core attributes, with each attribute constrained to 30–130.
+- **Random attribute allocation** : enter a total point budget (270–900) and randomly distribute it across the 9 core attributes, with each attribute constrained to 30–130.
 - Skills: add/update/remove, with a live count of skills and total points spent.
 - A radar chart visualizing the 9 core attributes.
 - A **backstory** field for freeform character history, with a live character counter.
@@ -45,7 +45,7 @@ render.yaml  Render Blueprint (both services)
 
 ### Running locally
 
-You'll need a MongoDB connection string — a free [MongoDB Atlas](https://www.mongodb.com/cloud/atlas/register) M0 cluster works well. Use a distinct database name for local dev (e.g. `coc_sheets_dev`) versus production (e.g. `coc_sheets_prod`) within the same cluster.
+You'll need a MongoDB connection string : a free [MongoDB Atlas](https://www.mongodb.com/cloud/atlas/register) M0 cluster works well. Use a distinct database name for local dev (e.g. `coc_sheets_dev`) versus production (e.g. `coc_sheets_prod`) within the same cluster.
 
 **Backend:**
 
@@ -85,15 +85,15 @@ cd backend
 
 The root `render.yaml` defines both services as a Render Blueprint:
 
-1. `coc-sheet-backend` — a Docker-based Web Service built from `backend/Dockerfile`.
-2. `coc-sheet-frontend` — a Static Site built from `frontend/` (`npm ci && npm run build`, publishing `dist/`).
+1. `coc-sheet-backend` : a Docker-based Web Service built from `backend/Dockerfile`.
+2. `coc-sheet-frontend` : a Static Site built from `frontend/` (`npm ci && npm run build`, publishing `dist/`).
 
 To deploy:
 
 1. Push this repo to GitHub.
 2. In the Render dashboard, create a new Blueprint from the repo (Render reads `render.yaml` automatically).
 3. On the `coc-sheet-backend` service, set the `MONGODB_URI` and `JWT_SECRET` secrets manually in the dashboard (they're marked `sync: false` in `render.yaml`, so nothing sensitive is committed to git). Point `MONGODB_URI` at a separate production database in the same Atlas cluster.
-4. Deploy. The frontend's `VITE_API_BASE_URL` and the backend's `CORS_ALLOWED_ORIGIN` in `render.yaml` assume the default service names (`coc-sheet-backend`, `coc-sheet-frontend`) — update both if you rename the services.
+4. Deploy. The frontend's `VITE_API_BASE_URL` and the backend's `CORS_ALLOWED_ORIGIN` in `render.yaml` assume the default service names (`coc-sheet-backend`, `coc-sheet-frontend`) : update both if you rename the services.
 
 **Free-tier note**: the backend web service spins down after ~15 minutes of inactivity, so the first request after idling has a cold-start delay (usually under a minute). The static frontend has no such delay.
 
@@ -103,7 +103,7 @@ This app is currently deployed at https://coc-sheet-frontend.onrender.com/.
 
 ## Desktop app (`ProjectStarter/`)
 
-The original single-user Java Swing application. Character data is stored in a local JSON file (`ProjectStarter/data/characterRecord.json`) — no network, no account, no database.
+The original single-user Java Swing application. Character data is stored in a local JSON file (`ProjectStarter/data/characterRecord.json`) : no network, no account, no database.
 
 ### Features
 
@@ -114,6 +114,6 @@ The original single-user Java Swing application. Character data is stored in a l
 
 ### Running it
 
-This project has no build tool (no Maven/Gradle) — it's compiled and run directly from source, which is how it originally shipped. `ProjectStarter/.project` and `ProjectStarter/.classpath` are included so VS Code's Java extension picks up the source folders and the jars in `ProjectStarter/lib/` automatically; open the `ProjectStarter/` folder in VS Code and run `src/main/ui/Main.java`.
+This project has no build tool (no Maven/Gradle) : it's compiled and run directly from source, which is how it originally shipped. `ProjectStarter/.project` and `ProjectStarter/.classpath` are included so VS Code's Java extension picks up the source folders and the jars in `ProjectStarter/lib/` automatically; open the `ProjectStarter/` folder in VS Code and run `src/main/ui/Main.java`.
 
 Tests (JUnit 5) live under `ProjectStarter/src/test/` and can be run from VS Code's test explorer, or via the bundled `ProjectStarter/lib/junit-platform-console-standalone-1.10.2.jar`.
